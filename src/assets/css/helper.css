@@ -1,0 +1,19 @@
+.bg-green{
+    background: #047003 !important;
+}
+.text-green{
+    color: green !important;
+}
+.full-width{
+    width: 100% !important;
+}
+
+.no-link{
+    text-decoration: none !important;
+}
+.no-border{
+    border: none !important;
+}
+.ml-auto{
+    margin-left: auto !important;
+}

@@ -1,0 +1,10 @@
+/* Helper css */
+@import url('helper.css');
+/* Font Awesome */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css');
+*{
+    padding: 0;
+    margin: 0;
+    font-size: 0.99rem;
+    outline: none;
+}
