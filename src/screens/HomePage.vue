@@ -89,20 +89,22 @@ export default {
 
         items: [
           {
-            id: 1,
+            id: 0,
             sale: true,
             name: 'Mukunuwanna',
             price: '152.75',
             unit: '200g',
             image: 'https://cdn.shopify.com/s/files/1/0273/2477/6490/products/mukunuwenna_420x.jpg',
+            saved: false
           },
           {
-            id: 2,
+            id: 1,
             sale: false,
             name: 'Mukunuwanna',
             price: '300.00',
             unit: '400g',
             image: 'https://cdn.shopify.com/s/files/1/0273/2477/6490/products/mukunuwenna_420x.jpg',
+            saved: false
           }
         ]
       }
