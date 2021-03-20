@@ -12,7 +12,7 @@ import ErrorPage from './screens/ErrorPage.vue';
 Vue.use(Router);
 
 let router = new Router({
-    mode: 'history',
+    // mode: 'history',
     routes: [
         {
             path: '/',
