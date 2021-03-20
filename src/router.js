@@ -7,6 +7,7 @@ import SigninPage from './screens/SigninPage.vue';
 import AboutPage from './screens/AboutPage.vue';
 import AccountPage from './screens/AccountPage.vue';
 import DetailsPage from './screens/DetailsPage.vue';
+import SellItem from './screens/SellNewItem.vue';
 import ErrorPage from './screens/ErrorPage.vue';
 
 Vue.use(Router);
@@ -28,6 +29,11 @@ let router = new Router({
             path: '/signin',
             name: 'SigninPage',
             component: SigninPage
+        },
+        {
+            path: '/sell',
+            name: 'SellItem',
+            component: SellItem
         },
         {
             path: '/account',
