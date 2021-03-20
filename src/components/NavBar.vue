@@ -1,6 +1,10 @@
 <template>
+<div class="full-width">
   <b-navbar toggleable="lg" type="light" variant="light" class="px-2" sticky>
-    <b-navbar-brand href="/">Aswanna</b-navbar-brand>
+    <b-navbar-brand href="/">
+      <img src="../assets/images/logo.png" width="30px" class="d-inline-block align-top">
+      Aswanna
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -27,7 +31,7 @@
           <b-dropdown-item href="#">FA</b-dropdown-item>
         </b-nav-item-dropdown> -->
 
-        <b-nav-item-dropdown right text="User">
+        <b-nav-item-dropdown text="User" right>
           <!-- Using 'button-content' slot -->
           <!-- <template #button-content>
             User
@@ -38,6 +42,7 @@
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
+</div>
 </template>
 
 <script>
