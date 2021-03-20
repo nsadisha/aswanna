@@ -37,6 +37,7 @@
             User
           </template> -->
           <b-dropdown-item><router-link to="/account" class="no-link">Account</router-link></b-dropdown-item>
+          <b-dropdown-item><router-link to="/sell" class="no-link">Sell Item</router-link></b-dropdown-item>
           <b-dropdown-item href="#">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -65,7 +66,7 @@ export default {
 /* Global css */
     @import url('../assets/css/styles.css');
 .no-link{
-  color: #837475;
+  color: #5c5152;
 }
 
 .active{
