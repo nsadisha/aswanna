@@ -34,7 +34,7 @@ Sed tristique, augue sed convallis volutpat, nunc enim congue arcu, vitae conval
 		<div class="row mt-2 mt-md-4">
 			<h2>Contact Details</h2>
 			<div class="contact-details">
-				<table class="mt-2">
+				<table>
 					<tr>
 						<td class=""><i class="fas fa-phone-alt"></i></td>
 						<td class="px-2"><strong>&nbsp;Phone: </strong></td>
