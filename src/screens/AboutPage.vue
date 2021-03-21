@@ -2,7 +2,7 @@
   <div>
     <section>
       <div class="container-fluid p-3 p-md-5">
-        <div class="row">
+        <div class="row pb-5">
           <div class="col-md-7 pl-0 pl-md-5">
             <div class="about">
               <h1 class="display-2">About Us</h1>
@@ -12,18 +12,14 @@
               <h3 class = "my-font text-green">We wish to serve both home gardeners who are looking for a way to earn an income from their hard work and the customers who want a convenient and easy place to buy fresh organic produce.</h3>
             </div>  
           </div>
-          <div class="col-md-5 pl-0 pl-md-5 text-center">
+          <div class="col-md-5 pt-5 text-center">
             <img src="../assets/images/mango.jpeg" alt="Mango Tree" class="rounded-circle">  
-          </div>
-          <div class="row form-group">
-          </div>
-          <div class="row form-group">
           </div>    
         </div>
-        <div class="row">
-          <div class="col-md-5">
+        <div class="row pb-5">
+          <div class="col-md-5 pb-5 d-none d-sm-block">
             <b-card style="border-radius:7px;">
-              <img src="../assets/images/vegetable.jpeg" alt="Vegetables" class="rounded">
+              <img src="../assets/images/vegetable.jpeg" alt="Vegetables" class="rounded full-width">
             </b-card>
           </div>
           <div class="col-md-7">
@@ -31,15 +27,16 @@
               <h1 class="display-3">Our Story</h1>
               <hr>
               <h4 class = "my-font">Home gardening has become very popular during the last few months. People had started to grow various kinds of vegetables, fruits, and many more agricultural goods on a small scale in their own gardens. But still, there is no way for them to distribute these goods properly. And finding a buyer has been challenging. Therefore the gardeners get excessive amounts of produce piled in their homes while others who need these produce have no way of getting them.
-</h4>
+              </h4>
             </div>  
           </div>
-          <div class="row form-group">
-          </div>
-          <div class="row form-group">
+          <div class="col-md-5 pt-3 pb-3 d-block d-sm-none">
+            <b-card style="border-radius:7px;">
+              <img src="../assets/images/vegetable.jpeg" alt="Vegetables" class="rounded full-width">
+            </b-card>
           </div>      
         </div>
-        <div class="row">
+        <div class="row pb-5">
           <div class="col-md-7 pl-0 pl-md-5">
             <div class="team">
               <h1 class="display-2">Our Team</h1>
@@ -58,11 +55,9 @@
           </div>
           <div class="col-md-5">
             <b-card style="border-radius:7px;">
-              <img src="../assets/images/team.jpeg" alt="Team Work" class="rounded">
+              <img src="../assets/images/team.jpeg" alt="Team Work" class="rounded full-width">
             </b-card>
-          </div>
-          <div class="row form-group">
-          </div>    
+          </div>  
         </div>        
         <div class="row mt-2 mt-md-4">
           <h2>Contact Details</h2>
@@ -101,11 +96,8 @@ export default {
     text-align: center;
 } 
 
-.form-group {
-    margin-bottom: 50px;
-}
-
 h1{
   font-family: 'Alex Brush', cursive;
 }
+
 </style>
