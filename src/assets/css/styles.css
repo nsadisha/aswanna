@@ -8,3 +8,7 @@
     font-size: 0.99rem;
     outline: none;
 }
+
+.form-group {
+    margin-bottom: 50px;
+}
