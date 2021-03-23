@@ -8,7 +8,7 @@
           </span>
           <span class="price"><strong>Rs. {{ itemData.unit_price }}</strong></span>
           <div class="d-flex save-btn">
-              <i v-if="itemData.saved" class="fas fa-bookmark ml-auto" @click="removeFromSaved"></i>
+              <i v-if="isSaved" class="fas fa-bookmark ml-auto" @click="removeFromSaved"></i>
               <i v-else class="far fa-bookmark ml-auto" @click="makeSaved"></i>
           </div>
       </b-card>
@@ -20,20 +20,12 @@ export default {
     name: 'Item',
     props:{
         data:{}
-        // data:{
-        //     id:Number,
-        //     sale: Boolean,
-        //     name: String,
-        //     price: String,
-        //     unit: String,
-        //     image: String,
-        //     saved: Boolean
-        // }
     },
     data(){
         return{
             amount: 1,
-            itemData: {}
+            itemData: {},
+            isSaved: false
         }
     },
     created(){
@@ -41,12 +33,60 @@ export default {
     },
     methods:{
         removeFromSaved: function(){
-            this.itemData.saved = !this.itemData.saved;
-            console.log('unsave');
+            if(this.$cookies.isKey('aswanna-user-id')){
+                var userId = this.$cookies.get('aswanna-user-id')
+                fetch('https://aswanna.herokuapp.com/wishlist/delete',
+                {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                    body: JSON.stringify({
+                        uid: userId, 
+                        item_id: this.itemData._id
+                    })
+                }).then(response => {
+                    return response.json();
+                }).then(res => {
+                    if(res.status){
+                        this.isSaved = !this.isSaved;
+                        console.log(this.itemData._id+' unsaved');
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    alert(err.message)
+                });
+            }else{
+                alert('Sign in before unsaving an item.')
+            }
         },
         makeSaved: function(){
-            this.itemData.saved = !this.itemData.saved;
-            console.log('save');
+            if(this.$cookies.isKey('aswanna-user-id')){
+                var userId = this.$cookies.get('aswanna-user-id')
+                fetch('https://aswanna.herokuapp.com/wishlist/add',
+                {
+                    method: 'POST',
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                    },
+                    body: JSON.stringify({
+                        uid: userId, 
+                        item_id: this.itemData._id
+                    })
+                }).then(response => {
+                    return response.json();
+                }).then(res => {
+                    if(res.status){
+                        this.isSaved = !this.isSaved;
+                        console.log(this.itemData._id+' saved');
+                    }
+                }).catch(err => {
+                    console.log(err)
+                    alert(err.message)
+                });
+            }else{
+                alert('Sign in before saving an item.')
+            }
         }
     }
 }
