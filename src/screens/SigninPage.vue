@@ -72,9 +72,46 @@ export default {
       },
     },
     methods: {
-      onSubmit(event) {
+      onSubmit(event){
         event.preventDefault()
-        alert(JSON.stringify(this.form))
+
+        if(this.form.password.length>=7){
+
+            var email = this.form.email;
+            var password = this.form.password;
+
+            fetch('https://aswanna.herokuapp.com/auth/login', 
+            {
+                method: 'POST',
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8",
+                },
+                body: JSON.stringify({
+                    email: email, 
+                    password: password
+                }),
+            }).then(response => {
+                return response.json();
+            }).then(res => {
+                // this.itemData = res.data
+                if(res.status){
+                    this.$cookies.set('aswanna-user-id', res.data._id)
+                    this.form.email = ''
+                    this.form.password = ''
+                }else{
+                    alert('Invalid username or password')
+                    this.form.password = ''
+                }
+                console.log(res);
+            }).catch(err => {
+                console.log(err);
+                alert("Something went wrong!\n"+err.message)
+            }).finally(() => {
+                console.log('done')
+            });
+        }else{
+            console.log('shot password!')
+        }
       },
     }
 }
