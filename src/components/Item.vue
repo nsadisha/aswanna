@@ -2,11 +2,11 @@
   <div class="col-xs-12 col-sm-6 col-lg-3 mb-2">
       <b-card style="border-radius: 7px;" class="item">
           <div v-if="itemData.sale" pill class="sale-badge"><strong>SALE</strong></div>
-          <router-link :to="'/details/'+itemData.id"><img :src="itemData.image" alt="" width="100%"></router-link>
+          <router-link :to="'/details/'+itemData._id"><img :src="itemData.image" alt="" width="100%"></router-link>
           <span class="name">
-              <strong><router-link :to="'/details/'+itemData.id" class="no-link">{{ itemData.name }}</router-link> - </strong><span>{{ data.unit }}</span>
+              <strong><router-link :to="'/details/'+itemData._id" class="no-link">{{ itemData.name }}</router-link> - </strong><span>{{ data.units + data.measurement }}</span>
           </span>
-          <span class="price"><strong>Rs. {{ itemData.price }}</strong></span>
+          <span class="price"><strong>Rs. {{ itemData.unit_price }}</strong></span>
           <div class="d-flex save-btn">
               <i v-if="itemData.saved" class="fas fa-bookmark ml-auto" @click="removeFromSaved"></i>
               <i v-else class="far fa-bookmark ml-auto" @click="makeSaved"></i>
@@ -19,15 +19,16 @@
 export default {
     name: 'Item',
     props:{
-        data:{
-            id:Number,
-            sale: Boolean,
-            name: String,
-            price: String,
-            unit: String,
-            image: String,
-            saved: Boolean
-        }
+        data:{}
+        // data:{
+        //     id:Number,
+        //     sale: Boolean,
+        //     name: String,
+        //     price: String,
+        //     unit: String,
+        //     image: String,
+        //     saved: Boolean
+        // }
     },
     data(){
         return{
@@ -86,6 +87,7 @@ export default {
 }
 .name strong{
     font-size: 1.2rem;
+    text-transform: capitalize;
 }
 .price{
     display: block;
