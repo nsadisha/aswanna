@@ -26,6 +26,10 @@
             <h2 v-if="searchQuery==''">There are no items!</h2>
             <h2 v-else>There are no items related to {{searchQuery}}!</h2>
           </div>
+          <div class="text-center" v-else-if="showSearchText">
+            <h2>Showing results for {{searchQuery}}.</h2>
+          </div>
+          
           <Item v-for="item in items" :key="item._id" :data="item"/>
         </div>
       </div>
@@ -68,6 +72,7 @@ export default {
     data(){
       return{
         searchQuery: '',
+        showSearchText: false,
         articles: [
           {
             title: 'Article 1',
@@ -112,7 +117,8 @@ export default {
     methods:{
       search: function(){
         if(this.searchQuery != ''){
-          this.items = null
+          this.items = null;
+          this.showSearchText = true;
           fetch('https://aswanna.herokuapp.com/item?q='+this.searchQuery, {method: 'GET'}).then(response => {
             return response.json();
           }).then(res => {
@@ -120,7 +126,18 @@ export default {
           }).catch(err => {
             console.log(err)
             alert(err.message)
-          })
+          });
+        }else{
+          this.items = null;
+          this.showSearchText = false;
+          fetch('https://aswanna.herokuapp.com/item', {method: 'GET'}).then(response => {
+            return response.json();
+          }).then(res => {
+            this.items = res.data
+          }).catch(err => {
+            console.log(err)
+            alert(err.message)
+          });
         }
       }
     }
