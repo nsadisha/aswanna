@@ -34,12 +34,12 @@
 					<tr>
 						<td class=""><i class="fas fa-phone-alt"></i></td>
 						<td class="px-2"><strong>&nbsp;Phone: </strong></td>
-						<td><span>+94789654563</span></td>
+						<td><span>{{ phone }}</span></td>
 					</tr>
 					<tr>
 						<td class=""><i class="fas fa-map-marker-alt"></i></td>
 						<td class="px-2"><strong>&nbsp;Location: </strong></td>
-						<td><span>Dambulla</span></td>
+						<td><span>{{ itemData.location }}</span></td>
 					</tr>
 				</table>
 			</div>
@@ -71,22 +71,38 @@ export default {
     return {
       id: "",
       itemData: {},
+      phone: '',
       relatedItems: []
     };
   },
-  mounted() {
-    this.id = this.$route.params.id;
+  methods:{
+    getData: function(){
+      this.id = this.$route.params.id;
 
     fetch('https://aswanna.herokuapp.com/item/'+this.id, {method: 'GET'}).then(response => {
       return response.json();
     }).then(res => {
-      this.itemData = res.data
-      console.log(this.itemData)
+      if(res.status){
+        this.itemData = res.data
+        this.phone = res.user.phone
+      }else{
+        alert('Item not found!')
+      }
+      // console.log(res.data)
     }).catch(err => {
       console.log(err)
       alert(err.message)
     });
+    }
   },
+  mounted() {
+    this.getData()
+  },
+  watch:{
+		$route (){
+			this.getData()
+		}
+	} 
 };
 </script>
 
@@ -100,6 +116,7 @@ export default {
 .name{
 	font-weight: 700;
 	font-size: 2.5rem;
+  text-transform: capitalize;
 
 }
 .availablity{
