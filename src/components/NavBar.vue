@@ -38,7 +38,7 @@
             User
           </template> -->
           <b-dropdown-item><router-link to="/account" class="no-link">Account</router-link></b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item class="d-lg-none">
           <hr>
@@ -58,6 +58,16 @@ export default {
     data(){
       return{
         currentNav:this.$route.name
+      }
+    },
+    methods:{
+      signOut: function(){
+        if(this.$cookies.isKey('aswanna-user-id')){
+          this.$cookies.remove('aswanna-user-id')
+          console.log('Signed out')
+        }else{
+          alert('No user signed in!')
+        }
       }
     },
     watch:{
