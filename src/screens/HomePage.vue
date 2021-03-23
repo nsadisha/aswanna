@@ -5,9 +5,9 @@
         <div class="row">
           <div class="col-md-5 mx-auto">
             <b-input-group>
-              <b-form-input placeholder="Search"></b-form-input>
+              <b-form-input placeholder="Search" v-model="searchQuery"></b-form-input>
               <b-input-group-append>
-                <b-button variant="secondary">Search</b-button>
+                <b-button variant="secondary" @click="search">Search</b-button>
               </b-input-group-append>
             </b-input-group>
           </div>
@@ -19,10 +19,14 @@
     <section class="p-3 p-lg-5"><hr>
       <div class="container-fluid">
         <div class="row">
-          <Item :data="items[0]"/>
-          <Item :data="items[0]"/>
-          <Item :data="items[1]"/>
-          <Item :data="items[1]"/>
+          <div class="text-center" v-if="!items">
+            <b-spinner variant="success" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+          </div>
+          <div class="text-center" v-else-if="items.length==0">
+            <h2 v-if="searchQuery==''">There are no items!</h2>
+            <h2 v-else>There are no items related to {{searchQuery}}!</h2>
+          </div>
+          <Item v-for="item in items" :key="item._id" :data="item"/>
         </div>
       </div>
     </section>
@@ -32,10 +36,13 @@
       <Chr />
       <div class="container-fluid">
         <div class="row">
-          <Item :data="items[1]"/>
-          <Item :data="items[0]"/>
-          <Item :data="items[1]"/>
-          <Item :data="items[1]"/>
+          <div class="text-center" v-if="!featuredItems">
+            <b-spinner variant="success" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+          </div>
+          <div class="text-center" v-else-if="featuredItems.length==0">
+            <h2>There are no featured items!</h2>
+          </div>
+          <Item v-for="featuredItem in featuredItems" :key="featuredItem._id" :data="featuredItem"/>
         </div>
       </div>
     </section>
@@ -60,6 +67,7 @@ export default {
     name: 'HomePage',
     data(){
       return{
+        searchQuery: '',
         articles: [
           {
             title: 'Article 1',
@@ -87,26 +95,33 @@ export default {
           },
         ],
 
-        items: [
-          {
-            id: 0,
-            sale: true,
-            name: 'Mukunuwanna',
-            price: '152.75',
-            unit: '200g',
-            image: 'https://cdn.shopify.com/s/files/1/0273/2477/6490/products/mukunuwenna_420x.jpg',
-            saved: false
-          },
-          {
-            id: 1,
-            sale: false,
-            name: 'Mukunuwanna',
-            price: '300.00',
-            unit: '400g',
-            image: 'https://cdn.shopify.com/s/files/1/0273/2477/6490/products/mukunuwenna_420x.jpg',
-            saved: false
-          }
-        ]
+        items: null,
+        featuredItems:[]
+      }
+    },
+    mounted(){
+      fetch('https://aswanna.herokuapp.com/item', {method: 'GET'}).then(response => {
+        return response.json();
+      }).then(res => {
+        this.items = res.data
+      }).catch(err => {
+        console.log(err)
+        alert(err.message)
+      })
+    },
+    methods:{
+      search: function(){
+        if(this.searchQuery != ''){
+          this.items = null
+          fetch('https://aswanna.herokuapp.com/item?q='+this.searchQuery, {method: 'GET'}).then(response => {
+            return response.json();
+          }).then(res => {
+            this.items = res.data
+          }).catch(err => {
+            console.log(err)
+            alert(err.message)
+          })
+        }
       }
     }
 }
