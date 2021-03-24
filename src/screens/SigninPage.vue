@@ -96,6 +96,11 @@ export default {
                 // this.itemData = res.data
                 if(res.status){
                     this.$cookies.set('aswanna-user-id', res.data._id)
+                    this.$cookies.set('aswanna-user-data',{
+                        email: res.data.email,
+                        phone: res.data.phone,
+                        city: res.data.city
+                    })
                     this.form.email = ''
                     this.form.password = ''
                     window.location = '/'
@@ -103,7 +108,6 @@ export default {
                     alert('Invalid username or password')
                     this.form.password = ''
                 }
-                console.log(res);
             }).catch(err => {
                 console.log(err);
                 alert("Something went wrong!\n"+err.message)
