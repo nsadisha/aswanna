@@ -95,11 +95,11 @@ export default {
     data(){
         return{
             form:{
-                email: '',
-                mobile: '',
-                city: '',
-                password: '',
-                cPassword: ''
+              email: '',
+              mobile: '',
+              city: '',
+              password: '',
+              cPassword: ''
             },
             terms: 'false'
         }
@@ -137,7 +137,7 @@ export default {
       registerTheUser(){
         var email = this.form.email;
         var password = this.form.password;
-        var phone = this.form.password;
+        var phone = this.form.mobile;
         var city = this.form.city;
 
         fetch('https://aswanna.herokuapp.com/auth/register',
@@ -161,8 +161,14 @@ export default {
                 // this.form.email = ''
                 // this.form.password = ''
                 alert('You have successfully registered!');
-                this.form = {};
-                window.location = '/signin';
+                this.form = {
+                  email: '',
+                  mobile: '',
+                  city: '',
+                  password: '',
+                  cPassword: ''
+                };
+                window.location = '/#/signin';
             }else{
                 alert('Something went wrong or this email is already used by someone!')
                 // this.form.password = ''
