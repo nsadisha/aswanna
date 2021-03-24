@@ -73,6 +73,7 @@ export default {
     watch:{
       $route (){
         this.currentNav = this.$route.name;
+        window.scrollTo(0,0);
       }
 	} 
 }
