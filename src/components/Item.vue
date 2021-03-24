@@ -30,6 +30,13 @@ export default {
     },
     created(){
         this.itemData = this.data
+        if(this.itemData.unit_price.toString().split('.').length<=1){
+            this.itemData.unit_price += '.00';
+        }else{
+            if(this.itemData.unit_price.toString().split('.')[1].length == 1){
+                this.itemData.unit_price += '0';
+            }
+        }
     },
     methods:{
         removeFromSaved: function(){

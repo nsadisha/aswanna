@@ -83,8 +83,11 @@ export default {
       return response.json();
     }).then(res => {
       if(res.status){
-        this.itemData = res.data
-        this.phone = res.user.phone
+        this.itemData = res.data;
+        this.phone = res.user.phone;
+
+        // format the price
+        this.formatPrice();
       }else{
         alert('Item not found!')
       }
@@ -93,6 +96,15 @@ export default {
       console.log(err)
       alert(err.message)
     });
+    },
+    formatPrice(){
+      if(this.itemData.unit_price.toString().split('.').length<=1){
+        this.itemData.unit_price += '.00';
+      }else{
+        if(this.itemData.unit_price.toString().split('.')[1].length == 1){
+          this.itemData.unit_price += '0';
+        }
+      }
     }
   },
   mounted() {
