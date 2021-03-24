@@ -115,7 +115,15 @@ export default {
     methods: {
       onSubmit(event) {
         event.preventDefault()
-        alert(JSON.stringify(this.form))
+        if(this.form.password.length >= 8){
+          if(this.form.cPassword == this.form.password){
+            this.registerTheUser();
+          }else{
+            console.log('password not match!')
+          }
+        }else{
+          console.log('short password!');
+        }
       },
       onReset(event) {
         event.preventDefault()
@@ -125,6 +133,45 @@ export default {
         this.form.city = ''
         this.form.password = ''
         this.form.cPassword = ''
+      },
+      registerTheUser(){
+        var email = this.form.email;
+        var password = this.form.password;
+        var phone = this.form.password;
+        var city = this.form.city;
+
+        fetch('https://aswanna.herokuapp.com/auth/register',
+        {
+            method: 'POST',
+            headers: {
+                "Content-type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({
+                email: email, 
+                password: password,
+                phone: phone,
+                city: city
+            }),
+        }).then(response => {
+            return response.json();
+        }).then(res => {
+            // this.itemData = res.data
+            if(res.status){
+                // this.$cookies.set('aswanna-user-id', res.data._id)
+                // this.form.email = ''
+                // this.form.password = ''
+                alert('You have successfully registered!');
+                this.form = {};
+                window.location = '/signin';
+            }else{
+                alert('Something went wrong or this email is already used by someone!')
+                // this.form.password = ''
+            }
+            console.log(res);
+        }).catch(err => {
+            console.log(err);
+            alert("Something went wrong!\n"+err.message)
+        });
       }
     }
 }
