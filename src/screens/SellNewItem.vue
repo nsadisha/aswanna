@@ -73,7 +73,8 @@
                 </b-form-group>
 
                 <b-form-group label="Image:" label-for="image" class="mb-3">
-                    <div class="photo" @click="clickInput" v-bind:style="{ 'background-image': 'url(' + form.image + ')' }"><span v-if="!form.image">+</span></div>
+                    <div class="photo" @click="clickInput" v-bind:style="{ 'background-image': 'url(' + displayImage + ')' }"><span v-if="!form.image">+</span></div>
+                    <img :src="displayImage" alt="" id="uploadedImage" class="d-none">
                     <b-form-file class="d-none" id="imageInput" @change="onFileChange" plain></b-form-file>
                 </b-form-group>
 
@@ -99,13 +100,14 @@ export default {
         { text: "Units", value: "Units" },
         { text: "Grams", value: "g" },
       ],
+      displayImage:null,
       form: {
         name: "",
         units: "kg",
         noOfUnits: 1,
         price: "",
         location: "",
-        image: null
+        image: '',
       },
     };
   },
@@ -113,22 +115,31 @@ export default {
     onSubmit(event) {
         event.preventDefault()
         alert('Form submitted!');
+        this.form.image = this.getDataUrl(document.querySelector('#uploadedImage'));
         console.log(this.form);
     },
     onReset(event) {
         event.preventDefault()
+        this.displayImage = null
         this.form = {
         name: "",
         units: "kg",
         noOfUnits: 1,
         price: "",
         location: "",
-        image: null
+        image: '',
       }
     },
-    onFileChange(e) {
+    onFileChange(e){
       const file = e.target.files[0];
-      this.form.image = URL.createObjectURL(file);
+      this.displayImage = URL.createObjectURL(file)
+    },
+    getDataUrl(img){
+      var canvas = document.createElement('canvas');
+      canvas.width = 600;
+      canvas.height = 600;
+      canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height, 0, 0, 600, 600);
+      return canvas.toDataURL('image/png');
     },
     clickInput(){
         document.querySelector('#imageInput').click();
