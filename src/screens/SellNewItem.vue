@@ -97,7 +97,7 @@ export default {
     return {
       options: [
         { text: "KG", value: "kg" },
-        { text: "Units", value: "Units" },
+        { text: "Units", value: " Units" },
         { text: "Grams", value: "g" },
       ],
       isSigninIn: this.$cookies.isKey('aswanna-user-id'),
