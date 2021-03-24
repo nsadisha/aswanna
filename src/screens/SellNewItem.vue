@@ -156,7 +156,8 @@ export default {
       var unit_price = this.form.price;
       var units = this.form.noOfUnits;
       var measurement = this.form.units;
-      var image = this.form.image;
+      var image = 'https://firebasestorage.googleapis.com/v0/b/aswanna-24197.appspot.com/o/images%2Fmukunuwenna_420x.jpg?alt=media&token=39f2273c-ecea-4a1c-bb30-9465bc159d3a';
+      // var image = this.form.image;
 
       fetch('https://aswanna.herokuapp.com/item/create',
       {
