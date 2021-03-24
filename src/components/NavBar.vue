@@ -12,7 +12,7 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item :active="currentNav=='HomePage'?true:false" active-class="active"><router-link to="/" class="no-link">Home</router-link></b-nav-item>
         <b-nav-item :active="currentNav=='AboutPage'?true:false" active-class="active"><router-link to="/about" class="no-link">About</router-link></b-nav-item>
-        <b-nav-item :active="currentNav=='SellItem'?true:false" active-class="active" class="d-none d-lg-block"><router-link to="/sell" class="no-link">Sell Item</router-link></b-nav-item>
+        <b-nav-item :active="currentNav=='SellItem'?true:false" active-class="active" class="d-none d-lg-block"><router-link :to="isSigninIn?'/sell':'/signin'" class="no-link">Sell Item</router-link></b-nav-item>
         <b-nav-item v-if="!isSigninIn" :active="currentNav=='RegisterPage'?true:false" active-class="active"><router-link to="/register" class="no-link">Register</router-link></b-nav-item>
         <b-nav-item v-if="!isSigninIn" :active="currentNav=='SigninPage'?true:false" active-class="active"><router-link to="/signin" class="no-link">Signin</router-link></b-nav-item>
         <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
@@ -39,7 +39,7 @@
         <b-nav-item class="d-lg-none">
           <hr>
           <div class="px-2">
-            <router-link to="/sell"><b-button class="full-width bg-green"><strong>Sell Item</strong></b-button></router-link>
+            <router-link :to="isSigninIn?'/sell':'/signin'"><b-button class="full-width bg-green"><strong>Sell Item</strong></b-button></router-link>
           </div>
         </b-nav-item>
       </b-navbar-nav>
