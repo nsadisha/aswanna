@@ -34,7 +34,7 @@
 
         <b-nav-item-dropdown v-if="isSigninIn" text="User" right>
           <b-dropdown-item><router-link to="/account" class="no-link">Account</router-link></b-dropdown-item>
-          <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="signOut"><span class="text-red">Sign Out</span></b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item class="d-lg-none">
           <hr>
@@ -60,11 +60,12 @@ export default {
     methods:{
       signOut: function(){
         if(this.$cookies.isKey('aswanna-user-id')){
-          this.$cookies.remove('aswanna-user-id')
+          this.$cookies.remove('aswanna-user-id');
+          this.$cookies.remove('aswanna-user-data');
           window.location = '/';
-          this.isSigninIn = false
+          this.isSigninIn = false;
           
-          console.log('Signed out')
+          console.log('Signed out');
         }else{
           alert('No user signed in!')
         }
