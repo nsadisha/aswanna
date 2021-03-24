@@ -19,7 +19,8 @@
 export default {
     name: 'Item',
     props:{
-        data:{}
+        data:{},
+        saved: Boolean
     },
     data(){
         return{
@@ -30,6 +31,7 @@ export default {
     },
     created(){
         this.itemData = this.data
+        this.isSaved = this.saved || false
         if(this.itemData.unit_price.toString().split('.').length<=1){
             this.itemData.unit_price += '.00';
         }else{
