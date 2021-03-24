@@ -11,10 +11,10 @@
     <b-collapse id="nav-collapse" is-nav>
       <b-navbar-nav class="ml-auto">
         <b-nav-item :active="currentNav=='HomePage'?true:false" active-class="active"><router-link to="/" class="no-link">Home</router-link></b-nav-item>
-        <b-nav-item :active="currentNav=='RegisterPage'?true:false" active-class="active"><router-link to="/register" class="no-link">Register</router-link></b-nav-item>
-        <b-nav-item :active="currentNav=='SigninPage'?true:false" active-class="active"><router-link to="/signin" class="no-link">Signin</router-link></b-nav-item>
         <b-nav-item :active="currentNav=='AboutPage'?true:false" active-class="active"><router-link to="/about" class="no-link">About</router-link></b-nav-item>
         <b-nav-item :active="currentNav=='SellItem'?true:false" active-class="active" class="d-none d-lg-block"><router-link to="/sell" class="no-link">Sell Item</router-link></b-nav-item>
+        <b-nav-item v-if="!isSigninIn" :active="currentNav=='RegisterPage'?true:false" active-class="active"><router-link to="/register" class="no-link">Register</router-link></b-nav-item>
+        <b-nav-item v-if="!isSigninIn" :active="currentNav=='SigninPage'?true:false" active-class="active"><router-link to="/signin" class="no-link">Signin</router-link></b-nav-item>
         <!-- <b-nav-item href="#" disabled>Disabled</b-nav-item> -->
       </b-navbar-nav>
 
@@ -32,11 +32,7 @@
           <b-dropdown-item href="#">FA</b-dropdown-item>
         </b-nav-item-dropdown> -->
 
-        <b-nav-item-dropdown text="User" right>
-          <!-- Using 'button-content' slot -->
-          <!-- <template #button-content>
-            User
-          </template> -->
+        <b-nav-item-dropdown v-if="isSigninIn" text="User" right>
           <b-dropdown-item><router-link to="/account" class="no-link">Account</router-link></b-dropdown-item>
           <b-dropdown-item @click="signOut">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
@@ -57,23 +53,27 @@ export default {
     name: 'NavBar',
     data(){
       return{
-        currentNav:this.$route.name
+        currentNav:this.$route.name,
+        isSigninIn: this.$cookies.isKey('aswanna-user-id')
       }
     },
     methods:{
       signOut: function(){
         if(this.$cookies.isKey('aswanna-user-id')){
           this.$cookies.remove('aswanna-user-id')
+          // window.location.reload();
+          this.isSigninIn = false
+          
           console.log('Signed out')
         }else{
           alert('No user signed in!')
         }
-      }
+      },
     },
     watch:{
-		$route (){
-			this.currentNav = this.$route.name;
-		}
+      $route (){
+        this.currentNav = this.$route.name;
+      }
 	} 
 }
 </script>
