@@ -98,6 +98,7 @@ export default {
                     this.$cookies.set('aswanna-user-id', res.data._id)
                     this.form.email = ''
                     this.form.password = ''
+                    window.location = '/'
                 }else{
                     alert('Invalid username or password')
                     this.form.password = ''
@@ -106,8 +107,6 @@ export default {
             }).catch(err => {
                 console.log(err);
                 alert("Something went wrong!\n"+err.message)
-            }).finally(() => {
-                console.log('done')
             });
         }else{
             console.log('shot password!')
