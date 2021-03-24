@@ -119,7 +119,7 @@ export default {
         if(this.searchQuery != ''){
           this.items = null;
           this.showSearchText = true;
-          fetch('https://aswanna.herokuapp.com/item?q='+this.searchQuery, {method: 'GET'}).then(response => {
+          fetch('https://aswanna.herokuapp.com/item?q='+this.searchQuery.trim(), {method: 'GET'}).then(response => {
             return response.json();
           }).then(res => {
             this.items = res.data
