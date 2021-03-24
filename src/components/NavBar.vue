@@ -61,7 +61,7 @@ export default {
       signOut: function(){
         if(this.$cookies.isKey('aswanna-user-id')){
           this.$cookies.remove('aswanna-user-id')
-          // window.location.reload();
+          window.location = '/';
           this.isSigninIn = false
           
           console.log('Signed out')
