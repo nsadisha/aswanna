@@ -73,7 +73,7 @@
                 </b-form-group>
 
                 <b-form-group label="Image:" label-for="image" class="mb-3">
-                    <div class="photo" @click="clickInput" v-bind:style="{ 'background-image': 'url(' + displayImage + ')' }"><span v-if="!form.image">+</span></div>
+                    <div class="photo" @click="clickInput" v-bind:style="{ 'background-image': 'url(' + displayImage + ')' }"><span v-if="!displayImage">+</span></div>
                     <img :src="displayImage" alt="" id="uploadedImage" class="d-none">
                     <b-form-file class="d-none" id="imageInput" @change="onFileChange" plain></b-form-file>
                 </b-form-group>
@@ -100,9 +100,12 @@ export default {
         { text: "Units", value: "Units" },
         { text: "Grams", value: "g" },
       ],
+      isSigninIn: this.$cookies.isKey('aswanna-user-id'),
+      userId: this.$cookies.get('aswanna-user-id'),
       displayImage:null,
       form: {
         name: "",
+        description: '',
         units: "kg",
         noOfUnits: 1,
         price: "",
@@ -114,8 +117,9 @@ export default {
   methods: {
     onSubmit(event) {
         event.preventDefault()
-        alert('Form submitted!');
         this.form.image = this.getDataUrl(document.querySelector('#uploadedImage'));
+
+        this.sendRequest();
         console.log(this.form);
     },
     onReset(event) {
@@ -143,8 +147,69 @@ export default {
     },
     clickInput(){
         document.querySelector('#imageInput').click();
-    }
+    },
+    sendRequest(){
+      var uid = this.userId;
+      var name = this.form.name;
+      var description = this.form.description;
+      var location = this.form.location;
+      var unit_price = this.form.price;
+      var units = this.form.noOfUnits;
+      var measurement = this.form.units;
+      var image = this.form.image;
+
+      fetch('https://aswanna.herokuapp.com/item/create',
+      {
+          method: 'POST',
+          headers: {
+              "Content-type": "application/json; charset=UTF-8",
+          },
+          body: JSON.stringify({
+            uid: uid,
+            name: name,
+            description: description,
+            location: location,
+            unit_price: unit_price,
+            units: units,
+            measurement: measurement,
+            image: image
+          }),
+      }).then(response => {
+          return response.json();
+      }).then(res => {
+        console.log(res);
+        if(res.status){
+            alert('Item posted!');
+            this.form = {
+              name: "",
+              description: '',
+              units: "kg",
+              noOfUnits: 1,
+              price: "",
+              location: "",
+              image: '',
+            };
+            window.location = '/';
+        }else{
+            alert('Something went wrong!')
+            // this.form.password = ''
+        }
+        console.log(res);
+      }).catch(err => {
+          console.log(err);
+          alert("Something went wrong!\n"+err.message)
+      });
+    },
   },
+  mounted(){
+    this.isSigninIn = this.$cookies.isKey('aswanna-user-id');
+    if(!this.isSigninIn){
+      window.location = '/#/signin'
+    }else{
+      this.userId = this.$cookies.get('aswanna-user-id');
+      console.log(this.userId)
+    }
+  }
 };
 </script>
 
