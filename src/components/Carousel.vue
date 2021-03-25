@@ -6,55 +6,21 @@
       :interval="5000"
       controls
       indicators
-      
       fade
       background="#ababab"
-      img-width="1024"
-      img-height="400"
       style="text-shadow: 1px 1px 2px #333;"
       @sliding-start="onSlideStart"
       @sliding-end="onSlideEnd"
     >
-      <!-- Text slides with image -->
       <b-carousel-slide
         v-for="i in slides"
         :caption="i.caption"
         :text="i.text"
-        :style="{ 'background-image' : 'url(\'' + i.image + '\')' }"
         class="carousel-slide"
-        :key="i.id"
-      ></b-carousel-slide>
-
-      <!-- <b-carousel-slide
-        v-for="i in slides"
-        :caption="i.caption"
-        :text="i.image"
-        class="carousel-slide"
+        :img-src="i.image"
         :key="i.id">
-        <template #img>
-          <img
-            class="d-block img-fluid w-100"
-            :src="i.image"
-            alt="image slot"
-          >
-        </template>
-      </b-carousel-slide> -->
+      </b-carousel-slide>
 
-      <!-- Slides with custom text -->
-      <!-- <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=54" class="carousel-slide">
-        <h1>Hello world!</h1>
-      </b-carousel-slide> -->
-
-      <!-- Slides with image only -->
-      <!-- <b-carousel-slide img-src="https://picsum.photos/1024/480/?image=58" class="carousel-slide"></b-carousel-slide> -->
-
-      <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-      <!-- <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image" class="carousel-slide">
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-          a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-        </p>
-      </b-carousel-slide> -->
     </b-carousel>
   </div>
 </template>
@@ -68,22 +34,29 @@
         slides:[
           {
             id: 0,
-            caption: 'Slide 1',
-            text: '',
-            image: '../assets/images/logo.png'
+            caption: 'The love of gardening is a seed once sawn that never dies.',
+            text: '~Gertrude Jekyll~',
+            image: 'https://res.cloudinary.com/dxrhrbot0/image/upload/v1616695302/abb00_Home-and-Garden-Shoppers-BANNER_RAHEXLi_c3elcb.jpg'
           },
           {
             id: 1,
-            caption: 'Slide 2',
+            caption: '',
             text: '',
-            image: 'https://picsum.photos/1024/480/?image=54'
+            image: 'https://res.cloudinary.com/dxrhrbot0/image/upload/v1616695303/482109255-968x387_ybdkwp.jpg'
           },
           {
             id: 2,
-            caption: 'Slide 3',
+            caption: '',
             text: '',
-            image: 'https://picsum.photos/1024/480/?image=55'
+            image: 'https://res.cloudinary.com/dxrhrbot0/image/upload/v1616695301/GettyImages-1134719594-768x435_hpgvu2.jpg'
+          },
+          {
+            id: 3,
+            caption: '',
+            text: '',
+            image: 'https://res.cloudinary.com/dxrhrbot0/image/upload/v1616695300/gardening-1521662873_opfuym.jpg'
           }
+          
         ]
 
       }
