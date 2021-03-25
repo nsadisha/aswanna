@@ -61,15 +61,17 @@
 
     <!-- Related items -->
     <section class="p-3 p-lg-5 mt-5">
-      <h2>RELATED ITEMS</h2>
+      <h2>MORE FROM THIS SELLER</h2>
       <Chr />
       <div class="container-fluid">
         <div class="row">
-          <div class="w-100"></div>
-          <!-- <Item :data="items[1]" />
-          <Item :data="items[0]" />
-          <Item :data="items[1]" />
-          <Item :data="items[1]" /> -->
+          <div class="text-center" v-if="!relatedItems">
+            <b-spinner variant="success" label="Spinning" style="width: 3rem; height: 3rem;"></b-spinner>
+          </div>
+          <div class="text-center" v-else-if="relatedItems.length==0">
+            <h2>No more items!</h2>
+          </div>
+          <Item v-else v-for="item in relatedItems" :key="item._id" :data="item"/>
         </div>
       </div>
     </section>
@@ -84,7 +86,7 @@ export default {
       id: "",
       itemData: {},
       phone: "",
-      relatedItems: [],
+      relatedItems: null,
     };
   },
   methods: {
@@ -99,6 +101,7 @@ export default {
           if (res.status) {
             this.itemData = res.data;
             this.phone = res.user.phone;
+            this.relatedItems = res.related;
 
             // format the price
             this.formatPrice();
