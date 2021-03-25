@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-3">
+  <div class="container-fluid py-3 px-3 px-md-5">
     <div class="row">
       <div class="col-lg-3">
         <div class="pt-3">
@@ -7,13 +7,13 @@
             <i class="fas fa-user"></i>
           </div>
           <h5 class="mt-3 text-center">{{ email }}</h5>
-          <ul class="mt-3 details" style="list-style: none">
+          <ul class="mt-3 details p-0" style="list-style: none">
             <li><Strong>Phone: </Strong>{{ phone }}</li>
             <li><Strong>City: </Strong>{{ city }}</li>
           </ul>
         </div>
       </div>
-      <div class="col-lg-8">
+      <div class="col-lg-9">
         <b-tabs content-class="mt-3">
           <b-tab title="Sell items" active>
             <div class="row">
