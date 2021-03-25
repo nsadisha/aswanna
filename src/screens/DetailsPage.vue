@@ -13,7 +13,7 @@
             <span class="availablity">
 				Availability: 
 				<strong>
-					<span v-if="itemData.available" class="text-green">In Stock</span>
+					<span v-if="itemData.isAvailable" class="text-green">In Stock</span>
 					<span v-else class="text-red">Out of Stock</span>
 				</strong>
 			</span>
