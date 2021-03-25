@@ -79,12 +79,12 @@
 
 @media only screen and (max-width: 768px) {
 .carousel-slide{
-    height: 300px !important;
+    height: 250px !important;
 }
 }
 @media only screen and (max-width: 450px) {
 .carousel-slide{
-    height: 200px !important;
+    height: 170px !important;
 }
 }
 </style>
