@@ -5,10 +5,11 @@
         <div class="col-md-8 col-lg-5 mx-auto">
           <b-card class="px-3 my-4">
             <h3 class="text-center">Sell Item</h3>
-            <b-form @submit="onSubmit" @reset="onReset" class="mt-3">
+            <form @submit="onSubmit" @reset="onReset" id="newItemForm" entype="multipart/form-data" class="mt-3">
               <b-form-group label="Item Name:" label-for="name" class="mb-2">
                 <b-form-input
                   id="name"
+                  name="name"
                   v-model="form.name"
                   type="text"
                   placeholder="Enter name"
@@ -23,11 +24,11 @@
               >
                 <b-form-radio-group
                   id="units"
+                  name="measurement"
                   v-model="form.units"
                   :options="options"
                   button-variant="outline-primary"
                   size="md"
-                  name="radio-btn-outline"
                   buttons
                 ></b-form-radio-group>
               </b-form-group>
@@ -35,6 +36,7 @@
               <b-form-group label="No of Units:" label-for="noOfUnits" class="mb-2">
                 <b-form-input
                   id="noOfUnits"
+                  name="units"
                   v-model="form.noOfUnits"
                   type="text"
                   placeholder="Number of units"
@@ -45,6 +47,7 @@
               <b-form-group label="Price per Unit:" label-for="price" class="mb-2">
                 <b-form-input
                   id="price"
+                  name="unit_price"
                   v-model="form.price"
                   type="text"
                   placeholder="Enter price"
@@ -55,6 +58,7 @@
               <b-form-group label="Location to Collect:" label-for="location" class="mb-2">
                 <b-form-input
                   id="location"
+                  name="location"
                   v-model="form.location"
                   type="text"
                   placeholder="Enter location"
@@ -65,6 +69,7 @@
                 <b-form-group label="Description:" label-for="description">
                     <b-form-textarea
                         id="description"
+                        name="description"
                         v-model="form.description"
                         placeholder="Enter description..."
                         rows="5"
@@ -73,16 +78,15 @@
                 </b-form-group>
 
                 <b-form-group label="Image:" label-for="image" class="mb-3">
-                    <div class="photo" @click="clickInput" v-bind:style="{ 'background-image': 'url(' + displayImage + ')' }"><span v-if="!displayImage">+</span></div>
-                    <img :src="displayImage" alt="" id="uploadedImage" class="d-none">
-                    <b-form-file class="d-none" id="imageInput" @change="onFileChange" plain></b-form-file>
+                    <div class="photo" @click="clickInput" v-bind:style="{ 'background-image': 'url(' + displayImage + ')' }"><span v-if="!form.image">+</span></div>
+                    <b-form-file class="d-none" id="imageInput" name="image" @change="onFileChange" accept="image/*" plain></b-form-file>
                 </b-form-group>
 
               <b-button type="submit" variant="primary">Submit</b-button>
               <b-button type="reset" variant="danger" class="mx-2"
                 >Reset</b-button
               >
-            </b-form>
+            </form>
           </b-card>
         </div>
       </div>
@@ -102,7 +106,7 @@ export default {
       ],
       isSigninIn: this.$cookies.isKey('aswanna-user-id'),
       userId: this.$cookies.get('aswanna-user-id'),
-      displayImage:null,
+      displayImage: null,
       form: {
         name: "",
         description: '',
@@ -110,21 +114,19 @@ export default {
         noOfUnits: 1,
         price: "",
         location: "",
-        image: '',
+        image: null,
       },
     };
   },
   methods: {
     onSubmit(event) {
         event.preventDefault()
-        this.form.image = this.getDataUrl(document.querySelector('#uploadedImage'));
 
         this.sendRequest();
-        console.log(this.form);
     },
     onReset(event) {
         event.preventDefault()
-        this.displayImage = null
+        this.displayImage = null;
         this.form = {
         name: "",
         units: "kg",
@@ -136,49 +138,36 @@ export default {
     },
     onFileChange(e){
       const file = e.target.files[0];
-      this.displayImage = URL.createObjectURL(file)
-    },
-    getDataUrl(img){
-      var canvas = document.createElement('canvas');
-      canvas.width = 600;
-      canvas.height = 600;
-      canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height, 0, 0, 600, 600);
-      return canvas.toDataURL('image/png');
+      this.displayImage = URL.createObjectURL(file);
+      this.form.image = file;
     },
     clickInput(){
         document.querySelector('#imageInput').click();
     },
-    sendRequest(){
-      var uid = this.userId;
-      var name = this.form.name;
-      var description = this.form.description;
-      var location = this.form.location;
-      var unit_price = this.form.price;
-      var units = this.form.noOfUnits;
-      var measurement = this.form.units;
-      var image = 'https://firebasestorage.googleapis.com/v0/b/aswanna-24197.appspot.com/o/images%2Fmukunuwenna_420x.jpg?alt=media&token=39f2273c-ecea-4a1c-bb30-9465bc159d3a';
-      // var image = this.form.image;
+    async sendRequest(){
+      // creating a custom FormData object
+      var formData = new FormData();
+      formData.append('uid', this.userId);
+      formData.append('name', this.form.name);
+      formData.append('description', this.form.description);
+      formData.append('location', this.form.location);
+      formData.append('unit_price', this.form.price);
+      formData.append('units', this.form.noOfUnits);
+      formData.append('measurement', this.form.units);
+      formData.append('image', this.form.image,'image.jpeg');
 
-      fetch('https://aswanna.herokuapp.com/item/create',
+      await fetch('https://aswanna.herokuapp.com/item/create',
       {
           method: 'POST',
           headers: {
-              "Content-type": "application/json; charset=UTF-8",
+              // "Content-type": "application/json; charset=UTF-8",
+              // 'content-type': 'multipart/form-data'
           },
-          body: JSON.stringify({
-            uid: uid,
-            name: name,
-            description: description,
-            location: location,
-            unit_price: unit_price,
-            units: units,
-            measurement: measurement,
-            image: image
-          }),
+          body: formData
       }).then(response => {
           return response.json();
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         if(res.status){
             alert('Item posted!');
             this.form = {
@@ -195,7 +184,6 @@ export default {
             alert('Something went wrong!')
             // this.form.password = ''
         }
-        console.log(res);
       }).catch(err => {
           console.log(err);
           alert("Something went wrong!\n"+err.message)
@@ -208,7 +196,6 @@ export default {
       window.location = '/#/signin'
     }else{
       this.userId = this.$cookies.get('aswanna-user-id');
-      console.log(this.userId)
     }
   }
 };
