@@ -12,6 +12,12 @@
             <li><Strong>City: </Strong>{{ city }}</li>
           </ul>
         </div>
+        <hr>
+        <div class="mt-4 mb-4 mb-lg-0">
+          <router-link to="#get-premium" class="no-link">
+            <button class="get-premium-btn mx-auto"><strong>Get Premium</strong> <i class="fas fa-crown"></i></button>
+          </router-link>
+        </div>
       </div>
       <div class="col-lg-9">
         <b-tabs content-class="mt-3">
@@ -110,16 +116,38 @@ export default {
   text-transform: capitalize;
 }
 
-/* cart */
-.close-button {
-  font-size: 2rem;
-  background: none;
-  border: none;
-  padding: 0;
-  color: #bbb;
+.get-premium-btn{
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  border: solid 2px transparent;
+  border-radius: 7px;
+  padding: 0.75rem;
+  background: #fed700;
+  color: #343f49;
+  width: 100%;
+  line-height: initial;
   transition: 0.1s;
 }
-.close-button:hover {
-  color: black;
+.get-premium-btn:hover{
+  border: solid 2px #343f49;
 }
+.get-premium-btn i{
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+/* Responsive css */
+@media only screen and (max-width:991px){
+  .get-premium-btn{
+    width: 17rem;
+  }
+}
+@media only screen and (max-width:470px){
+  .get-premium-btn{
+    width: 100%;
+  }
+}
+
 </style>
