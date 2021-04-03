@@ -43,7 +43,125 @@
               <Item v-for="savedItem in savedItems" :key="savedItem._id" :data="savedItem" saved/>
             </div>
           </b-tab>
-          <b-tab title="Settings"><p>Settings</p></b-tab>
+          <b-tab title="Settings" class="">
+            <section>
+              <h3>Update profile</h3>
+              <hr>
+              <b-form @submit="onUpdate" class="settings-form mt-3">
+                <b-form-group id="input-group-1" label="Email"  label-for="input-1"
+                    description="We'll never share your email with anyone else."
+                    class="mb-2">
+                    <b-form-input
+                    id="input-1"
+                    v-model="updateForm.email"
+                    type="email"
+                    placeholder="Email"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+
+                <b-form-group id="input-group-2" label="Phone number:" label-for="input-2" class="mb-2">
+                    <b-form-input
+                    id="input-2"
+                    v-model="updateForm.phone"
+                    placeholder="Phone number"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-group id="input-group-3" label="City:" label-for="input-3" class="mb-2">
+                    <b-form-input
+                    id="input-3"
+                    v-model="updateForm.city"
+                    placeholder="City"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+                
+                <b-button type="submit" class="bg-green no-border mt-2">UPDATE</b-button>
+              </b-form>
+            </section>
+
+            <section class="mt-4 mt-md-5">
+              <h3>Change password</h3>
+              <hr>
+              <b-form @submit="onUpdate" class="settings-form mt-3">
+                <b-form-group id="input-group-4" label="Current password:" label-for="input-4" class="mb-2">
+                    <b-form-input
+                    type="password"
+                    id="input-4"
+                    v-model="chagePasswordForm.currentPassword"
+                    placeholder="Current password"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+                
+                <b-form-group id="input-group-5" label="New password:" label-for="input-5" class="mb-2">
+                    <b-form-input
+                    type="password"
+                    id="input-5"
+                    v-model="chagePasswordForm.newPassword"
+                    placeholder="New password"
+                    aria-describedby="input-live-help input-live-feedback"
+                    :state="newPassword"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+                <b-form-invalid-feedback id="input-live-feedback">
+                  Your password is very short.   
+                </b-form-invalid-feedback>
+                
+                <b-form-group id="input-group-5" label="Confirm password:" label-for="input-5" class="mb-2">
+                    <b-form-input
+                    type="password"
+                    id="input-5"
+                    v-model="chagePasswordForm.confirmPassword"
+                    placeholder="Confirm password"
+                    :state="confirmPassword"
+                    required
+                    ></b-form-input>
+                </b-form-group>
+                
+                <b-button type="submit" class="bg-green no-border mt-2">CHANGE</b-button>
+              </b-form>
+            </section>
+
+            <section class="mt-4 mt-md-5">
+              <h3 class="text-dark-red">Danger zone</h3>
+              <b-card style="border-radius:7px;">
+
+                <div class="row">
+                  <div class="col-sm">
+                    <strong>Remove all items</strong><br>
+                    This will delete all of your posted items.
+                  </div>
+                  <div class="col-sm-auto mt-2 mt-sm-0">
+                    <button class="danger-btn" @click="removeAllItems()">Remove all items</button>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm">
+                    <strong>Remove saved items</strong><br>
+                    This will delete all of your saved items.
+                  </div>
+                  <div class="col-sm-auto mt-2 mt-sm-0">
+                    <button class="danger-btn" @click="removeSavedItems()">Remove saved items</button>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm">
+                    <strong>Delete account</strong><br>
+                    This will delete your account and all of your data.
+                  </div>
+                  <div class="col-sm-auto mt-2 mt-sm-0">
+                    <button class="danger-btn" @click="deleteAccount()">Delete account</button>
+                  </div>
+                </div>
+              </b-card>
+            </section>
+
+          </b-tab>
         </b-tabs>
       </div>
     </div>
@@ -60,7 +178,18 @@ export default {
       city: '',
       items: null,
       savedItems: null,
-      isSigninIn: this.$cookies.isKey('aswanna-user-id')
+      isSigninIn: this.$cookies.isKey('aswanna-user-id'),
+
+      updateForm: {
+        email:'',
+        phone: '',
+        city: ''
+      },
+      chagePasswordForm: {
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      }
     };
   },
   methods:{
@@ -76,7 +205,13 @@ export default {
         console.log(err)
         alert(err.message)
       })
-    }
+    },
+    onUpdate(){
+
+    },
+    removeAllItems(){},
+    removeSavedItems(){},
+    deleteAccount(){}
   },
   mounted(){
     this.isSigninIn = this.$cookies.isKey('aswanna-user-id');
@@ -89,7 +224,19 @@ export default {
       this.email = user.email;
       this.phone = user.phone;
       this.city = user.city;
-      console.log(userId)
+
+      // filling update profile form
+      this.updateForm.email = this.email;
+      this.updateForm.phone = this.phone;
+      this.updateForm.city = this.city;
+    }
+  },
+  computed: {
+    newPassword() {
+      return this.chagePasswordForm.newPassword==''?null:this.chagePasswordForm.newPassword.length > 7 ? true : false
+    },
+    confirmPassword() {
+        return this.chagePasswordForm.newPassword==''?null:this.chagePasswordForm.newPassword.length>7?this.chagePasswordForm.confirmPassword == this.chagePasswordForm.newPassword:false
     }
   },
 };
@@ -138,6 +285,33 @@ export default {
   font-size: 1.1rem;
 }
 
+/* settings forms starts */
+
+.settings-form{
+  width: 30rem;
+}
+
+.danger-zone-group-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.danger-btn{
+  border: solid 1px #cb2431;
+  background: white;
+  color: #cb2431;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 0.4rem 0.6rem;
+  transition: 0.1s;
+}
+.danger-btn:hover{
+  background: #cb2431;
+  color: white;
+}
+
+/* settings form ends */
+
 /* Responsive css */
 @media only screen and (max-width:991px){
   .get-premium-btn{
@@ -146,6 +320,9 @@ export default {
 }
 @media only screen and (max-width:470px){
   .get-premium-btn{
+    width: 100%;
+  }
+  .settings-form{
     width: 100%;
   }
 }
