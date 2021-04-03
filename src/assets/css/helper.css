@@ -7,6 +7,9 @@
 .text-red{
     color: red !important;
 }
+.text-dark-red{
+    color: #cb2431 !important;
+}
 .full-width{
     width: 100% !important;
 }
